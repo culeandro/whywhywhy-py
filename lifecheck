@@ -1,0 +1,33 @@
+import requests
+import time
+import random
+
+from requests import ConnectTimeout, HTTPError, ReadTimeout, Timeout, ConnectionError
+#####
+txtnewd = random.randint(1, 100000001)
+
+
+def verify(line):
+	url = "http://{}".format(line)
+	try:
+		response = requests.get(url,timeout=1)
+		int(response.status_code)
+		if(response.status_code == 200):
+			print("UP!!!")
+			write(line)
+		else:
+			print("UP!!!")
+	except (ConnectTimeout, HTTPError, ReadTimeout, Timeout, ConnectionError):
+		print("DOWN!!!")
+
+def write(line):
+	with open("{}.txt".format(txtnewd),"a") as g:
+		for linha in range(1):
+			g.write("{}\n".format(line))
+	g.close()
+
+with open('ips.txt') as f:
+    for line in f:
+    	line=line.rstrip("\n\r")
+    	verify(line)
+#Código escrito por Seiva :)#
